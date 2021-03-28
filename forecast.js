@@ -91,29 +91,6 @@ function displayHistory(cityName) {
     history.append(historyCity);
 }
 
-// function renderCity(){
-//     var cityArray=[];
-//     if (localStorage.savedCity) {
-//       history.innerHTML="";
-//       var cityArray = JSON.parse(localStorage.getItem("savedCity"));
-//       console.log(cityArray.length);
-//       for(var i=0; i < cityArray.length; i++){
-       
-//           console.log(cityArray[i].city);
-//           var liCityEl = document.createElement('button');
-//           liCityEl.type = 'button';
-//           liCityEl.classList.add("list-group-item");
-//           liCityEl.classList.add("list-group-item-action");
-//           liCityEl.textContent = cityArray[i].city;
-//           history.appendChild(liCityEl);
-          
-//       }
-      
-      
-//     }
-
-
-
 //get values from second API
 function populate(lat, lon) {
 
@@ -152,17 +129,18 @@ function populate(lat, lon) {
 
         //get 5day forecast
         for(var i = 1; i <= 5; i++) {
+            //clear past data from date's box
+            var dayBox = $("#day" + i);
+            $(dayBox).empty();
 
             //get date, temp, and humidity
             var date = moment().tz(data.timezone).add(i, 'days').format('l');
             var dayTemp = $("<p></p>").text("Temp: " + data.daily[i].temp.day +" °F");
             var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i].humidity + " %");
 
-            //append to date's box
-            var dayBox = $("#day" + i);
+            //append new data to date's box
             dayBox.append(date, dayTemp, dayHumidity);
 
         }
     })   
 }
-
