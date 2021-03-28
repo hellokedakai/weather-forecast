@@ -1,3 +1,4 @@
+// search for a city section
 var cityInput = document.querySelector(".form-control");
 var apiKey = "9c74928d78e0aadb457195cd716eef1e";
 
@@ -32,10 +33,13 @@ $("span").on("click", function() {
         return response.json();
     })
     .then(function(data) {
+
+        // console.log(data);
         // error handling
-        console.log(data);
+        var cityName = data.city.name;
+        
         if(data.cod === "200") {
-            console.log("Valid Input");
+            console.log("Valid Input"); 
         } else if (data.cod === "400") {
             alert(data.message);
         } else if (data.cod === "404") {
@@ -44,19 +48,73 @@ $("span").on("click", function() {
             alert(data.message);
         }
 
-        // get current city name
-        cityToday.innerHTML = data.city.name;
-
+        // place current city name
+        cityToday.innerHTML = cityName;
 
         //get latitude and longitude of the city
         var lat = data.city.coord.lat;
         var lon = data.city.coord.lon;
 
         populate(lat, lon);
+        // save city to local storage
+        searchHistory(cityName);
     })
 });
 
-//get UV index
+function searchHistory (cityName) {
+    var duplicateFound;
+    // var cityArray = [];
+    var justSearchedCity = {
+        city : cityName,
+    };
+    var cityArray = JSON.parse(localStorage.getItem("savedCity") || "[]");
+          
+    // save the just searched city if it's not a duplicate
+    for(var i = 0; i < cityArray.length; i++){
+        if(cityArray[i].city === cityName){
+            console.log(cityArray[i].city);
+            duplicateFound = true;
+        }
+    }
+    // if the city isn't a duplicate search, push to array and search history
+    if(!duplicateFound){
+        cityArray.push(justSearchedCity);
+        localStorage.setItem("savedCity", JSON.stringify(cityArray));
+        displayHistory(cityName);
+    }
+};
+
+function displayHistory(cityName) {
+    var history = document.querySelector(".search-history");
+    console.log(cityName);
+    var historyCity = $("<ul>" + cityName + "</ul>");
+    history.append(historyCity);
+}
+
+// function renderCity(){
+//     var cityArray=[];
+//     if (localStorage.savedCity) {
+//       history.innerHTML="";
+//       var cityArray = JSON.parse(localStorage.getItem("savedCity"));
+//       console.log(cityArray.length);
+//       for(var i=0; i < cityArray.length; i++){
+       
+//           console.log(cityArray[i].city);
+//           var liCityEl = document.createElement('button');
+//           liCityEl.type = 'button';
+//           liCityEl.classList.add("list-group-item");
+//           liCityEl.classList.add("list-group-item-action");
+//           liCityEl.textContent = cityArray[i].city;
+//           history.appendChild(liCityEl);
+          
+//       }
+      
+      
+//     }
+
+
+
+//get values from second API
 function populate(lat, lon) {
 
     var oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +
@@ -68,7 +126,8 @@ function populate(lat, lon) {
     })
     .then(function(data) {
         console.log(data);
-        console.log(data.timezone);
+        // console.log(data.timezone);
+
         //get city's timezone
         cityToday.innerHTML += " (" +
         moment().tz(data.timezone).format('l') + ")";
@@ -80,7 +139,7 @@ function populate(lat, lon) {
         day0wind.innerHTML = data.current.wind_speed + " MPH";
         day0Uvi.innerHTML = data.current.uvi;
 
-        // get current UVI value and assign colors
+        // get current UV index value and assign colors
         if(data.current.uvi < 3) {
             day0Uvi.setAttribute("class", "favorable");
         }
@@ -103,13 +162,7 @@ function populate(lat, lon) {
             var dayBox = $("#day" + i);
             dayBox.append(date, dayTemp, dayHumidity);
 
-
         }
-
-
-
-    })
-
-   
-    
+    })   
 }
+

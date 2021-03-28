@@ -26,12 +26,12 @@
                 <div class="col-4" id="search-stuff">
                     <h3>Search for a City:</h3>
                     <!-- input -->
-                    <div class="input-group">
+                    <div class="input-group col-12">
                         <input type="text" class="form-control" placeholder="ex. Los Angeles" aria-label="city-input">
                         <span class="search-icon" type= "submit"><i class="fas fa-search"></i></span>
                     </div>
                     <!-- search history -->
-                    <div class="search-history"></div>
+                    <li class="search-history"></li>
                 </div>
 
                 <!-- Return API -->
@@ -44,8 +44,9 @@
                             <p class="today">Wind Speed: <span id="day0-wind"></span></p>
                             <p class="today">UV Index: <span id="day0-uvi"></span></p>
                         </div>
-                        <div class="row" id="next-forecast">
-                            <h3>5-Day Forecast:</h3>
+
+                        <h3 class="col-12">5-Day Forecast:</h3>
+                        <div class="col-12" id="next-forecast">
                             <div class="col-2" id="day1"></div>
                             <div class="col-2" id="day2"></div>
                             <div class="col-2" id="day3"></div>
