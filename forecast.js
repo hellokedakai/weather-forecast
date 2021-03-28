@@ -19,11 +19,7 @@ var day3Temp = document.getElementById("day3");
 var day4Temp = document.getElementById("day4");
 var day5Temp = document.getElementById("day5");
 
-
-// upon click of the search button, call API
-$("span").on("click", function() {
-    // get the input value of the searched city
-    var city = cityInput.value.trim();
+function fetchData(city) {
     var callApi = "https://api.openweathermap.org/data/2.5/forecast?q=" + city +
     "&units=imperial&appid=" + apiKey;
     
@@ -59,6 +55,11 @@ $("span").on("click", function() {
         // save city to local storage
         searchHistory(cityName);
     })
+}
+// upon click of the search button, call API
+$("span").on("click", ()=> {
+    var city = cityInput.value.trim();
+    fetchData(city);
 });
 
 function searchHistory (cityName) {
@@ -87,8 +88,14 @@ function searchHistory (cityName) {
 function displayHistory(cityName) {
     var history = document.querySelector(".search-history");
     console.log(cityName);
-    var historyCity = $("<ul>" + cityName + "</ul>");
-    history.append(historyCity);
+    var historyCity = document.createElement("ul");
+    historyCity.innerText = cityName;
+    history.appendChild(historyCity);
+
+    historyCity.addEventListener("click", ()=> {
+        fetchData(cityName);
+    }
+    )
 }
 
 //get values from second API
@@ -127,8 +134,6 @@ function populate(lat, lon) {
             $("#city-today").append(icon);
         }
 
-
-
         // get current temperature, humidity, and wind speed
         day0Temp.innerHTML = data.current.temp +" °F";
         day0Humidity.innerHTML = data.current.humidity + " %";
@@ -156,8 +161,6 @@ function populate(lat, lon) {
             var date = moment().tz(data.timezone).add(i, 'days').format('l') + " ";
             var dateElement = $("<span>" + date + "</span>");
             dayBox.append(dateElement);
-
-            //get icons data for current date and the next 5-days
             
             var weather = data.daily[i].weather[0].main;
             console.log(weather);
@@ -183,8 +186,6 @@ function populate(lat, lon) {
             dayBox.append(dayTemp, dayHumidity);
 
         }
-
-
 
     })   
 }

@@ -70,6 +70,10 @@ h3 {
     border-radius: 2px;
 }
 
+p {
+    margin-bottom: 10px;
+}
+
 #next-forecast {
     display: flex;
     justify-content: space-between;
