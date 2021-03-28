@@ -44,8 +44,9 @@ $("span").on("click", function() {
             alert(data.message);
         }
 
-        cityToday.innerHTML = data.city.name + " (" +
-        moment().format('l') + ")";
+        // get current city name
+        cityToday.innerHTML = data.city.name;
+
 
         //get latitude and longitude of the city
         var lat = data.city.coord.lat;
@@ -67,7 +68,12 @@ function populate(lat, lon) {
     })
     .then(function(data) {
         console.log(data);
-    
+        console.log(data.timezone);
+        //get city's timezone
+        cityToday.innerHTML += " (" +
+        moment().tz(data.timezone).format('l') + ")";
+
+
         // get current temperature, humidity, and wind speed
         day0Temp.innerHTML = data.current.temp +" °F";
         day0Humidity.innerHTML = data.current.humidity + " %";
@@ -89,13 +95,14 @@ function populate(lat, lon) {
         for(var i = 1; i <= 5; i++) {
 
             //get date, temp, and humidity
-            var date = moment().add(i, 'days').format('l');
-            var dayTemp = $("<p></p>").text("Temp: " + data.daily[i+1].temp.day +" °F");
-            var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i+1].humidity + " %");
+            var date = moment().tz(data.timezone).add(i, 'days').format('l');
+            var dayTemp = $("<p></p>").text("Temp: " + data.daily[i].temp.day +" °F");
+            var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i].humidity + " %");
 
             //append to date's box
             var dayBox = $("#day" + i);
             dayBox.append(date, dayTemp, dayHumidity);
+
 
         }
 
