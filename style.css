@@ -34,17 +34,7 @@ h3 {
 }
 
 /*Temporary Stuff*/
-.col-4, .col-8 {
-    border: 1px black solid;
-}
 
-#day0 {
-    border: 1px sandybrown dotted;
-}
-
-#next-forecast {
-    border: 1px brown dotted;
-}
 .today {
     align-items: baseline;
     

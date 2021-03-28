@@ -134,12 +134,24 @@ function populate(lat, lon) {
             $(dayBox).empty();
 
             //get date, temp, and humidity
-            var date = moment().tz(data.timezone).add(i, 'days').format('l');
+            var date = moment().tz(data.timezone).add(i, 'days').format('l') + " ";
+            dayBox.append(date);
+
+            if(data.daily[i].weather.main = "Rain") {
+                var icon = $('<i class="fas fa-cloud-rain"></i>');
+                dayBox.append(icon);
+            } else if (data.daily[i].main = "Clear") {
+                var icon = $('<i class="fas fa-sun"></i>');
+                dayBox.append(icon);
+            } else if (data.daily[i].main = "Clouds") {
+                var icon = $('<i class="fas fa-cloud"></i>');
+                dayBox.append(icon);
+            }
             var dayTemp = $("<p></p>").text("Temp: " + data.daily[i].temp.day +" °F");
             var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i].humidity + " %");
 
             //append new data to date's box
-            dayBox.append(date, dayTemp, dayHumidity);
+            dayBox.append(dayTemp, dayHumidity);
 
         }
     })   
