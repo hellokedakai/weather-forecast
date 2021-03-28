@@ -10,14 +10,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 3px;
 }
 
 .search-history {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    margin-top: 20px;
 }
 #search-stuff {
     background-color: lightgrey;
+
 }
 
 .fa-search {
@@ -33,8 +36,6 @@ h3 {
     padding-top: 20px;
 }
 
-/*Temporary Stuff*/
-
 .today {
     align-items: baseline;
     
@@ -43,21 +44,18 @@ h3 {
 
 #day0-uvi {
     color:white;
-    padding: 8px;
+    padding: 4px 8px;
     font-weight: bold;
 }
 .favorable {
-
     background-color: green;
 }
 
 .moderate {
-
     background-color: orange;
 }
 
 .severe {
-
     background-color: red;
 }
 
@@ -67,14 +65,31 @@ h3 {
     padding: 10px 10px;
     margin: 10px;
     align-items: center;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 p {
-    margin-bottom: 10px;
+    margin: auto;
+}
+
+.today {
+    margin: 10px;
 }
 
 #next-forecast {
     display: flex;
     justify-content: space-between;
+}
+
+.history-format {
+    background-color: white;
+    padding: 10px 0 10px 10px;
+}
+
+.history-format:hover {
+    background-color: lightskyblue;
+}
+
+ul {
+    margin-bottom: 0px;
 }

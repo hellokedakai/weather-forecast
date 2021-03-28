@@ -31,9 +31,8 @@ function fetchData(city) {
     .then(function(data) {
 
         // console.log(data);
+
         // error handling
-        var cityName = data.city.name;
-        
         if(data.cod === "200") {
             console.log("Valid Input"); 
         } else if (data.cod === "400") {
@@ -43,6 +42,8 @@ function fetchData(city) {
         } else if (data.cod === "403") {
             alert(data.message);
         }
+        
+        var cityName = data.city.name;
 
         // place current city name
         cityToday.innerHTML = cityName;
@@ -73,7 +74,7 @@ function searchHistory (cityName) {
     // save the just searched city if it's not a duplicate
     for(var i = 0; i < cityArray.length; i++){
         if(cityArray[i].city === cityName){
-            console.log(cityArray[i].city);
+            // console.log(cityArray[i].city);
             duplicateFound = true;
         }
     }
@@ -87,15 +88,15 @@ function searchHistory (cityName) {
 
 function displayHistory(cityName) {
     var history = document.querySelector(".search-history");
-    console.log(cityName);
+    // console.log(cityName);
     var historyCity = document.createElement("ul");
     historyCity.innerText = cityName;
+    historyCity.setAttribute("class", "history-format");
     history.appendChild(historyCity);
 
     historyCity.addEventListener("click", ()=> {
         fetchData(cityName);
-    }
-    )
+    })
 }
 
 //get values from second API
@@ -109,8 +110,8 @@ function populate(lat, lon) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
-        // console.log(data.timezone);
+        // console.log(data);
+        console.log(data.timezone);
 
         //get city's timezone
         cityToday.innerHTML += " (" +
