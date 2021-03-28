@@ -45,7 +45,7 @@ $("span").on("click", function() {
         }
 
         cityToday.innerHTML = data.city.name + " (" +
-        moment().format("MM/DD/YY") + ")";
+        moment().format('l') + ")";
 
         //get latitude and longitude of the city
         var lat = data.city.coord.lat;
@@ -86,15 +86,16 @@ function populate(lat, lon) {
         }
 
         //get 5day forecast
-        for(var i = 0; i < 5; i++) {
-            var date = moment().add(i, 'days').format("MM/DD/YY");
-            console.log(date);
-            var dayTemp = $("<p></p<").text(data.daily[i+1].temp.day);
-            var dayHumidity = $("<p></p<").text(data.daily[i+1].humidity);
+        for(var i = 1; i <= 5; i++) {
 
-            //create each day's elements
-            var dayBox = $("#day" + i + 1);
-            dayBox.append(dayTemp, dayHumidity);
+            //get date, temp, and humidity
+            var date = moment().add(i, 'days').format('l');
+            var dayTemp = $("<p></p>").text("Temp: " + data.daily[i+1].temp.day +" °F");
+            var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i+1].humidity + " %");
+
+            //append to date's box
+            var dayBox = $("#day" + i);
+            dayBox.append(date, dayTemp, dayHumidity);
 
         }
 
