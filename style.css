@@ -30,7 +30,7 @@ h1 {
 }
 
 h3 {
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 /*Temporary Stuff*/
@@ -74,9 +74,3 @@ h3 {
     display: flex;
     justify-content: space-between;
 }
-
-/* #day0-uvi {
-    display: flex;
-    flex-direction: row;
-    align-items: inherit;
-} */

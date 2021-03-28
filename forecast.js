@@ -107,7 +107,26 @@ function populate(lat, lon) {
 
         //get city's timezone
         cityToday.innerHTML += " (" +
-        moment().tz(data.timezone).format('l') + ")";
+        moment().tz(data.timezone).format('l') + ") ";
+
+        //icon
+        var currentWeather = data.daily[0].weather[0].main;
+        console.log(currentWeather);
+
+        if(currentWeather == "Rain") {
+            var icon = $('<i class="fas fa-cloud-rain"></i>');
+            $("#city-today").append(icon);
+        } else if (currentWeather == "Clear") {
+            var icon = $('<i class="fas fa-sun"></i>');
+            $("#city-today").append(icon);
+        } else if (currentWeather == "Clouds") {
+            var icon = $('<i class="fas fa-cloud"></i>');
+            $("#city-today").append(icon);
+        } else if (currentWeather == "Snow") {
+            var icon = $('<i class="bi bi-snow2"></i>');
+            $("#city-today").append(icon);
+        }
+
 
 
         // get current temperature, humidity, and wind speed
@@ -135,18 +154,28 @@ function populate(lat, lon) {
 
             //get date, temp, and humidity
             var date = moment().tz(data.timezone).add(i, 'days').format('l') + " ";
-            dayBox.append(date);
+            var dateElement = $("<span>" + date + "</span>");
+            dayBox.append(dateElement);
 
-            if(data.daily[i].weather.main = "Rain") {
+            //get icons data for current date and the next 5-days
+            
+            var weather = data.daily[i].weather[0].main;
+            console.log(weather);
+
+            if(weather == "Rain") {
                 var icon = $('<i class="fas fa-cloud-rain"></i>');
                 dayBox.append(icon);
-            } else if (data.daily[i].main = "Clear") {
+            } else if (weather == "Clear") {
                 var icon = $('<i class="fas fa-sun"></i>');
                 dayBox.append(icon);
-            } else if (data.daily[i].main = "Clouds") {
+            } else if (weather == "Clouds") {
                 var icon = $('<i class="fas fa-cloud"></i>');
                 dayBox.append(icon);
+            } else if (weather == "Snow") {
+                var icon = $('<i class="bi bi-snow2"></i>');
+                dayBox.append(icon);
             }
+
             var dayTemp = $("<p></p>").text("Temp: " + data.daily[i].temp.day +" °F");
             var dayHumidity = $("<p></p>").text("Humidity: " + data.daily[i].humidity + " %");
 
@@ -154,5 +183,8 @@ function populate(lat, lon) {
             dayBox.append(dayTemp, dayHumidity);
 
         }
+
+
+
     })   
 }
